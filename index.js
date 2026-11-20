@@ -195,7 +195,7 @@ function renderProjects() {
 
     if (projects.length === 0) {
         const message = document.createElement("p");
-        message.innerHTML = "<h3><b><u>Code Folio – Personal Portfolio Builder</u></b></h3><br><b>Code Folio is a personal portfolio builder created using HTML, CSS, and JavaScript. It allows users to customize their profile, upload a profile photo, add skills and projects, change themes, and download their portfolio as an HTML file.</b><br> <a href=\"https://jovial-sopapillas-856b45.netlify.app/\" target=\"_blank\" rel=\"noopener noreferrer\">View Live Portfolio</a><br><h3><b><u>MBA GameZone</u></b></h3><b>An educational gaming website designed for MBA students and MBA entrance exam aspirants. It helps users learn through quizzes, management challenges, case studies, and business simulations.</b><br> <a href=\"https://fascinating-dolphin-69866b.netlify.app/\" target=\"_blank\" rel=\"noopener noreferrer\">Visit My GameZone</a>";
+        message.innerHTML = "<h3><b><u>Code Folio – Personal Portfolio Builder</u></b></h3><br><b>Code Folio is a personal portfolio builder created using HTML, CSS, and JavaScript. It allows users to customize their profile, upload a profile photo, add skills and projects, change themes, and download their portfolio as an HTML file.</b><br> <a href=\"https://jovial-sopapillas-856b45.netlify.app/\" target=\"_blank\" rel=\"noopener noreferrer\">View Live Portfolio</a><br><h3>";
         projectsList.appendChild(message);
         return;
     }
@@ -686,9 +686,7 @@ section {
        
 <section>
     <h2>My Projects</h2>
-    ${projectsHTML || "<p><u><b>Code Folio – Personal Portfolio Builder</b></u><br><br> Code Folio is a personal portfolio builder created using HTML, CSS, and JavaScript. It allows users to customize their profile, upload a profile photo, add skills and projects, change themes, and download their portfolio as an HTML file.<br><a href=\"https://jovial-sopapillas-856b45.netlify.app/\" target=\"_blank\">Visit My Code Folio</a><br><br><u><b>MBA GameZone</b></u><br><br>An educational gaming website designed for MBA students and MBA entrance exam aspirants. It helps users learn through quizzes, management challenges, case studies, and business simulations.<br> <a href=\"https://fascinating-dolphin-69866b.netlify.app/\" target=\"_blank\">Visit My GameZone</a></p>"}
-</section>
-
+    ${projectsHTML || "<p><u><b>Code Folio – Personal Portfolio Builder</b></u><br><br> Code Folio is a personal portfolio builder created using HTML, CSS, and JavaScript. It allows users to customize their profile, upload a profile photo, add skills and projects, change themes, and download their portfolio as an HTML file.<br><a href=\"https://jovial-sopapillas-856b45.netlify.app/\" target=\"_blank\">Visit My Code Folio</a></p>"}
 <section>
     <h2>Connect With Me</h2>
     ${socialLinksHTML || "<p>github:  <a href='https://github.com/Komal-Kumari-582' target='_blank'>Komal-Kumari-582</a><br>linkedin: <a href='https://www.linkedin.com/in/komal-kumari-7a6385354/' target='_blank'>Komal-Kumari-7a6385354/</a><br> <a href='https://drive.google.com/file/d/1niEZlOi2sMH58-E_CKgKChU_prYxsjox/view?usp=drive_link' target='_blank'>Download Resume</a> </p>"}
