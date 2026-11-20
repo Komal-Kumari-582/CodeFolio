@@ -16,7 +16,7 @@ const skillsList = document.getElementById("skillsList");
 const projectsList = document.getElementById("projectsList");
 
 
-let skills = JSON.parse(localStorage.getItem("skills")) || ["HTML", "CSS"];
+let skills = JSON.parse(localStorage.getItem("skills")) || ["HTML", "CSS", "JavaScript"];
 
 skills = skills.map(function(skill) {
     return typeof skill === "string"
@@ -195,7 +195,7 @@ function renderProjects() {
 
     if (projects.length === 0) {
         const message = document.createElement("p");
-        message.innerHTML = "<h3><b><u>Code Folio – Personal Portfolio Builder</u></b></h3><br><b>Code Folio is a personal portfolio builder created using HTML, CSS, and JavaScript. It allows users to customize their profile, upload a profile photo, add skills and projects, change themes, and download their portfolio as an HTML file.</b>";
+        message.innerHTML = "<h3><b><u>Code Folio – Personal Portfolio Builder</u></b></h3><br><b>Code Folio is a personal portfolio builder created using HTML, CSS, and JavaScript. It allows users to customize their profile, upload a profile photo, add skills and projects, change themes, and download their portfolio as an HTML file.</b><br> <a href=\"https://jovial-sopapillas-856b45.netlify.app/\" target=\"_blank\" rel=\"noopener noreferrer\">View Live Portfolio</a><br><h3><b><u>MBA GameZone</u></b></h3><b>An educational gaming website designed for MBA students and MBA entrance exam aspirants. It helps users learn through quizzes, management challenges, case studies, and business simulations.</b><br> <a href=\"https://fascinating-dolphin-69866b.netlify.app/\" target=\"_blank\" rel=\"noopener noreferrer\">Visit My GameZone</a>";
         projectsList.appendChild(message);
         return;
     }
@@ -365,63 +365,12 @@ function escapeHTML(value) {
     });
 }
 
-// Profile Photo URL
-const photoUrlInput = document.getElementById("photoUrlInput");
-const loadPhotoUrlBtn = document.getElementById("loadPhotoUrlBtn");
-
-let linkedPhotoData = "";
-
-if (loadPhotoUrlBtn) {
-    loadPhotoUrlBtn.addEventListener("click", async function () {
-
-        const photoUrl = photoUrlInput.value.trim();
-
-        if (!photoUrl) {
-            alert("Please paste your photo URL!");
-            return;
-        }
-
-        try {
-            const response = await fetch(photoUrl);
-
-            if (!response.ok) {
-                throw new Error("Photo could not load");
-            }
-
-            const blob = await response.blob();
-
-            if (!blob.type.startsWith("image/")) {
-                throw new Error("Link must point directly to an image");
-            }
-
-            const reader = new FileReader();
-
-            reader.onload = function () {
-                linkedPhotoData = reader.result;
-
-                const previewPhoto =
-                    document.getElementById("previewPhoto");
-
-                previewPhoto.src = linkedPhotoData;
-                previewPhoto.hidden = false;
-
-                alert("Photo loaded successfully!");
-            };
-
-            reader.readAsDataURL(blob);
-
-        } catch (error) {
-            alert();
-            console.error(error);
-        }
-    });
-}
 
 document.getElementById("downloadPortfolioBtn").addEventListener("click", async function () {
     const name = nameInput.value.trim() || "Komal Kumari";
     const role = roleInput.value.trim() || " Web Development";
     const about = aboutInput.value.trim() || "I am an aspiring Web Developer with a passion for creating modern, responsive, and user-friendly websites. I am learning HTML, CSS, and JavaScript and enjoy building practical projects to improve my coding skills. I am eager to learn new technologies, solve problems, and grow as a developer.";
-    const profilePhoto = localStorage.getItem("profilePhoto") || linkedPhotoData || "";
+    const profilePhoto = localStorage.getItem("profilePhoto") || "";
 
     const photoHTML = profilePhoto
       ? `<img src="${profilePhoto}" alt="Profile Photo" class="download-photo">`
