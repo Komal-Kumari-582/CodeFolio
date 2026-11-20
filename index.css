@@ -701,6 +701,8 @@ body {
     overflow-wrap: anywhere;
 }
 
+
+
 @media (max-width: 480px) {
     .profile-heading {
         gap: 12px;

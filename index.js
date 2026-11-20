@@ -39,14 +39,19 @@ function saveData() {
 
 function updatePortfolio() {
     previewName.textContent =
-        nameInput.value.trim() || "Your Name";
+        nameInput.value.trim() || "Komal Kumari";
 
     previewRole.textContent =
-        roleInput.value.trim() || "Aspiring Web Developer";
+        roleInput.value.trim() || "Web Development";
 
     previewAbout.textContent =
-        aboutInput.value.trim() || "Your introduction will appear here.";
-}
+        aboutInput.value.trim() || "I am an aspiring Web Developer with a passion for creating modern, responsive, and user-friendly websites. I am learning HTML, CSS, and JavaScript and enjoy building practical projects to improve my coding skills. I am eager to learn new technologies, solve problems, and grow as a developer.";
+
+    previewName.style.fontSize = "50px";
+    previewRole.style.fontSize = "30px";
+    previewAbout.style.fontSize = "20px";
+    }
+
 nameInput.addEventListener("input", function() {
     updatePortfolio();
     saveData();
@@ -99,6 +104,14 @@ function updateSEO() {
 
 function renderSkills() {
     skillsList.replaceChildren();
+
+     if (skills.length === 0) {
+        const message = document.createElement("p");
+        message.innerHTML = "<b>HTML<br>CSS<br>JavaScript</b>";
+        skillsList.appendChild(message);
+        return;
+    }
+    
 
     const categories = ["Frontend", "Backend", "Database", "Tools", "Other"];
 
@@ -182,14 +195,14 @@ function renderProjects() {
 
     if (projects.length === 0) {
         const message = document.createElement("p");
-        message.textContent = "Your projects will appear here.";
+        message.innerHTML = "<h3><b><u>Code Folio – Personal Portfolio Builder</u></b></h3><br><b>Code Folio is a personal portfolio builder created using HTML, CSS, and JavaScript. It allows users to customize their profile, upload a profile photo, add skills and projects, change themes, and download their portfolio as an HTML file.</b>";
         projectsList.appendChild(message);
         return;
     }
 
+    
     projects.forEach(function(project, index) {
-        // Purane saved projects sirf text ho sakte hain.
-        // Unhe bhi support karne ke liye:
+       
         const projectData = typeof project === "string"
             ? { name: project, description: "", link: "" }
             : project;
@@ -275,7 +288,7 @@ document.getElementById("addProjectBtn").addEventListener("click", function() {
 
   
 if (editingProjectIndex !== null) {
-    // Update the existing project
+    
     projects[editingProjectIndex] = {
         name: project,
         description: description,
@@ -285,7 +298,7 @@ if (editingProjectIndex !== null) {
     editingProjectIndex = null;
     document.getElementById("addProjectBtn").textContent = "Add Project";
 } else {
-    // Add a new project only when not editing
+    
     projects.push({
         name: project,
         description: description,
@@ -352,12 +365,63 @@ function escapeHTML(value) {
     });
 }
 
+// Profile Photo URL
+const photoUrlInput = document.getElementById("photoUrlInput");
+const loadPhotoUrlBtn = document.getElementById("loadPhotoUrlBtn");
 
-document.getElementById("downloadPortfolioBtn").addEventListener("click", function () {
-    const name = nameInput.value.trim() || "My Portfolio";
-    const role = roleInput.value.trim() || "Aspiring Web Developer";
-    const about = aboutInput.value.trim() || "Welcome to my portfolio.";
-    const profilePhoto = localStorage.getItem("profilePhoto") || "";
+let linkedPhotoData = "";
+
+if (loadPhotoUrlBtn) {
+    loadPhotoUrlBtn.addEventListener("click", async function () {
+
+        const photoUrl = photoUrlInput.value.trim();
+
+        if (!photoUrl) {
+            alert("Please paste your photo URL!");
+            return;
+        }
+
+        try {
+            const response = await fetch(photoUrl);
+
+            if (!response.ok) {
+                throw new Error("Photo could not load");
+            }
+
+            const blob = await response.blob();
+
+            if (!blob.type.startsWith("image/")) {
+                throw new Error("Link must point directly to an image");
+            }
+
+            const reader = new FileReader();
+
+            reader.onload = function () {
+                linkedPhotoData = reader.result;
+
+                const previewPhoto =
+                    document.getElementById("previewPhoto");
+
+                previewPhoto.src = linkedPhotoData;
+                previewPhoto.hidden = false;
+
+                alert("Photo loaded successfully!");
+            };
+
+            reader.readAsDataURL(blob);
+
+        } catch (error) {
+            alert();
+            console.error(error);
+        }
+    });
+}
+
+document.getElementById("downloadPortfolioBtn").addEventListener("click", async function () {
+    const name = nameInput.value.trim() || "Komal Kumari";
+    const role = roleInput.value.trim() || " Web Development";
+    const about = aboutInput.value.trim() || "I am an aspiring Web Developer with a passion for creating modern, responsive, and user-friendly websites. I am learning HTML, CSS, and JavaScript and enjoy building practical projects to improve my coding skills. I am eager to learn new technologies, solve problems, and grow as a developer.";
+    const profilePhoto = localStorage.getItem("profilePhoto") || linkedPhotoData || "";
 
     const photoHTML = profilePhoto
       ? `<img src="${profilePhoto}" alt="Profile Photo" class="download-photo">`
@@ -666,18 +730,19 @@ section {
 
         <section>
             <h2>My Skills</h2>
-            ${skillsHTML || "<p>No skills added yet.</p>"}
+            ${skillsHTML || "<p>HTML<br>CSS<br>JavaScript<br>MS Office<br>MS Word<br>MS Excel<br>MS PowerPoint</p>"}
+            
         </section>
 
        
 <section>
     <h2>My Projects</h2>
-    ${projectsHTML || "<p>No projects added yet.</p>"}
+    ${projectsHTML || "<p><u><b>Code Folio – Personal Portfolio Builder</b></u><br><br> Code Folio is a personal portfolio builder created using HTML, CSS, and JavaScript. It allows users to customize their profile, upload a profile photo, add skills and projects, change themes, and download their portfolio as an HTML file.<br><a href=\"https://jovial-sopapillas-856b45.netlify.app/\" target=\"_blank\">Visit My Code Folio</a><br><br><u><b>MBA GameZone</b></u><br><br>An educational gaming website designed for MBA students and MBA entrance exam aspirants. It helps users learn through quizzes, management challenges, case studies, and business simulations.<br> <a href=\"https://fascinating-dolphin-69866b.netlify.app/\" target=\"_blank\">Visit My GameZone</a></p>"}
 </section>
 
 <section>
     <h2>Connect With Me</h2>
-    ${socialLinksHTML || "<p>No links added yet.</p>"}
+    ${socialLinksHTML || "<p>github:  <a href='https://github.com/Komal-Kumari-582' target='_blank'>Komal-Kumari-582</a><br>linkedin: <a href='https://www.linkedin.com/in/komal-kumari-7a6385354/' target='_blank'>Komal-Kumari-7a6385354/</a><br> <a href='https://drive.google.com/file/d/1niEZlOi2sMH58-E_CKgKChU_prYxsjox/view?usp=drive_link' target='_blank'>Download Resume</a> </p>"}
 </section>
 
 ${resumeHTML}
@@ -826,12 +891,10 @@ const removePhotoBtn = document.getElementById("removePhotoBtn");
 
 if (photoInput && previewPhoto) {
     // Load previously saved photo
-    const savedPhoto = localStorage.getItem("profilePhoto");
+  const savedPhoto = localStorage.getItem("profilePhoto");
 
-    if (savedPhoto) {
-        previewPhoto.src = savedPhoto;
-        previewPhoto.hidden = false;
-    }
+previewPhoto.src = savedPhoto || "C:\\Users\\arani\\OneDrive\\Documents\\Desktop\\Komal Internship\\Web Development\\codefolio\\Image\\profile.png";
+previewPhoto.hidden = false;
 
     // Preview and save selected photo
     photoInput.addEventListener("change", function () {
